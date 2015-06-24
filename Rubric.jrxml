@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-06-18T15:36:14 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rubric" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c570d31-b520-4874-90f6-48cd182a7ab7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Localhost"/>
+	<parameter name="templateid" class="java.lang.String"/>
+	<parameter name="indicatorid" class="java.lang.String"/>
+	<parameter name="observationids" class="java.util.Collection" nestedType="java.lang.String" isForPrompting="false"/>
+	<parameter name="observationidsquery" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean($P{observationids} == null || $P{observationids}.equals("")) ? "" :" and $X{IN, observationid::TEXT, observationids}"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select 
+	t.templateid,
+	t.templatename,
+	t.groupid,
+	t.groupname,
+	t.indicatorid,
+	t.indicatortype,
+	t.indicatorquestion,
+	t.optionid,
+	t.optiontype,
+	t.optiontext,
+	
+	(
+		SELECT
+			count(bb.*)::INT
+		FROM
+			"observationindicatorsrubric" bb
+		WHERE
+			bb.templateid = t.templateid::TEXT
+		AND
+			bb.indicatorid = t.indicatorid
+		AND
+			bb.optionid = t.optionid
+		AND
+			bb.isoptionselected = 'true'
+		$P!{observationidsquery} 
+	) as count
+	
+from 
+	"templategroupsrubric" t
+where
+	t.templateid::TEXT = $P{templateid} 
+and
+	t.indicatorid = $P{indicatorid}]]>
+	</queryString>
+	<field name="templateid" class="java.lang.Object"/>
+	<field name="groupid" class="java.lang.String"/>
+	<field name="groupname" class="java.lang.String"/>
+	<field name="indicatorid" class="java.lang.String"/>
+	<field name="indicatorquestion" class="java.lang.String"/>
+	<field name="optionid" class="java.lang.String"/>
+	<field name="optiontext" class="java.lang.String"/>
+	<field name="count" class="java.lang.Integer"/>
+	<field name="templatename" class="java.lang.String"/>
+	<field name="indicatortype" class="java.lang.String"/>
+	<field name="optiontype" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="420" y="0" width="60" height="20" backcolor="#EBEBEB" uuid="8a00e03f-f181-4eb6-b8b2-af2bb9012c4b">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 ) ]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="10" rightPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Avenir Next - Custom"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="420" height="20" backcolor="#EBEBEB" uuid="ed545859-445b-4c04-9847-0f17ce0d94a1">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 ) ]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="10" rightPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Avenir Next - Custom"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{optiontext}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="0" width="420" height="20" uuid="ef69f345-1df0-4395-a5d0-567d5387ce22">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 ) ]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="10" rightPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Avenir Next - Custom"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{optiontext}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="420" y="0" width="60" height="20" uuid="20a1299e-c6b8-47d2-8885-fa97595a825f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 ) ]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="10" rightPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Avenir Next - Custom"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{count}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="186">
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="10" width="480" height="170" uuid="0be22078-fff6-404d-81b6-0a00cdddfd71">
+						<property name="net.sf.jasperreports.chart.range.axis.tick.interval" value="1"/>
+					</reportElement>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend>
+						<font fontName="Avenir Next - Custom"/>
+					</chartLegend>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{optiontext}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{optiontext}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{count}]]></valueExpression>
+						<labelExpression><![CDATA[$F{indicatorquestion}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="false" isShowTickLabels="false">
+					<plot orientation="Horizontal">
+						<seriesColor seriesOrder="0" color="#6ACA3F"/>
+						<seriesColor seriesOrder="1" color="#1A9BFC"/>
+						<seriesColor seriesOrder="2" color="#FD9833"/>
+						<seriesColor seriesOrder="3" color="#FEC53D"/>
+						<seriesColor seriesOrder="4" color="#AB3584"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelMask="#"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<line>
+				<reportElement x="0" y="184" width="480" height="1" uuid="d0e6f139-2fdb-4e20-ad51-c32dcdadedf6">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#F0F0F1"/>
+				</graphicElement>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-06-24T08:30:38 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Summary" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6fdc09b9-ea06-4e8b-89a3-8973379001be">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Gideon - DB"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<style name="Table_TH" mode="Transparent" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#279DF9"/>
+			<bottomPen lineWidth="0.5" lineColor="#279DF9"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#E0F0FE">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#D8ECFD"/>
+			<bottomPen lineWidth="0.5" lineColor="#D8ECFD"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#D8ECFD"/>
+			<bottomPen lineWidth="0.5" lineColor="#D8ECFD"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F4F4F4"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<topPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<leftPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<bottomPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<rightPen lineWidth="0.5" lineColor="#F5FBFE"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<topPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<leftPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<bottomPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<rightPen lineWidth="0.5" lineColor="#F5FBFE"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<topPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<leftPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<bottomPen lineWidth="0.5" lineColor="#F5FBFE"/>
+			<rightPen lineWidth="0.5" lineColor="#F5FBFE"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#ECF6FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Summary Table" uuid="0b54ec6f-cc99-409e-9681-245e3ec1d349">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Gideon - DB"/>
+		<queryString language="SQL">
+			<![CDATA[select *  from "testbubble" limit 12]]>
+		</queryString>
+		<field name="groupname" class="java.lang.String"/>
+		<field name="week" class="java.lang.String"/>
+		<field name="score" class="java.lang.String"/>
+		<field name="numobs" class="java.lang.String"/>
+		<variable name="Average Score" class="java.lang.Double" calculation="Average">
+			<variableExpression><![CDATA[DOUBLE_VALUE( $F{score} )/100]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+		<variable name="Total Observations" class="java.lang.Integer" calculation="Sum">
+			<variableExpression><![CDATA[INTEGER_VALUE( $F{numobs} )]]></variableExpression>
+			<initialValueExpression><![CDATA[0]]></initialValueExpression>
+		</variable>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[select * from "testbubble" limit 12]]>
+	</queryString>
+	<field name="groupname" class="java.lang.String"/>
+	<field name="week" class="java.lang.String"/>
+	<field name="score" class="java.lang.String"/>
+	<field name="numobs" class="java.lang.String"/>
+	<variable name="Average Score" class="java.lang.Double" calculation="Average">
+		<variableExpression><![CDATA[DOUBLE_VALUE($F{score})/100]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<summary>
+		<band height="267" splitType="Stretch">
+			<componentElement>
+				<reportElement x="27" y="202" width="500" height="60" uuid="3978d69c-566f-42ae-a295-d37e8454081e"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Summary Table" uuid="21781a8b-a105-4423-a4a9-74ae0434632e">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="150" uuid="d65611f4-4d8d-4a15-8fba-2752fe1c6deb">
+						<jr:columnHeader style="Table 1_CH" height="20"/>
+						<jr:columnFooter style="Table 1_CH" height="20">
+							<staticText>
+								<reportElement x="1" y="0" width="149" height="20" forecolor="#134E7C" uuid="84da0fc2-c5a5-4629-9deb-0710d7133b9a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="Table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="150" height="20" uuid="23a1023e-e43d-4b09-8e28-b708c613c4a1">
+									<property name="local_mesure_unitheight" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Week " + $F{week}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="170" uuid="4f70b40b-ffe1-4c22-93b6-aeaafe5a872d">
+						<jr:columnHeader style="Table 1_CH" height="20">
+							<staticText>
+								<reportElement x="1" y="0" width="169" height="20" forecolor="#134E7C" uuid="6420f98b-3bfd-4cf3-a412-1c87b0f5c7ce">
+									<property name="local_mesure_unitheight" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[AVERAGE SCORE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table 1_CH" height="20">
+							<textField pattern="#,##0.00%">
+								<reportElement x="1" y="0" width="169" height="20" forecolor="#134E7C" uuid="c2e246eb-8d93-4e04-ac18-ba53f015f730"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{Average Score}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table 1_TD" height="20">
+							<textField>
+								<reportElement x="1" y="0" width="169" height="20" uuid="74de4bfa-02d4-43b9-887e-337a679e4fc6">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{score} + "%"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="169" uuid="6c7d46eb-9d27-4f1e-a5cb-a7b97868180d">
+						<jr:columnHeader style="Table 1_CH" height="20">
+							<staticText>
+								<reportElement x="1" y="0" width="168" height="20" forecolor="#134E7C" uuid="07e5f779-a7ac-4cc7-a5cb-d2b85b256fc2">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[NO. OF OBSERVATIONS]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="Table 1_CH" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="169" height="20" forecolor="#134E7C" uuid="fa458989-d702-4a27-b0d8-37993d058b36"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{Total Observations}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table 1_TD" height="20">
+							<textField>
+								<reportElement x="1" y="0" width="168" height="20" uuid="221940ca-6a27-4168-97e3-ae63fd264734">
+									<property name="com.jaspersoft.studio.unit.height" value="px"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Avenir Next - Custom" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numobs}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<componentElement>
+				<reportElement stretchType="RelativeToTallestObject" x="16" y="12" width="500" height="178" uuid="e6c098b0-1b28-4c9b-a049-de91e54f6965"/>
+				<hc:chart xmlns:hc="http://jaspersoft.com/highcharts" xsi:schemaLocation="http://jaspersoft.com/highcharts http://jaspersoft.com/schema/highcharts.xsd" type="Spline">
+					<hc:chartSetting name="default">
+						<hc:chartProperty name="chart.zoomType">
+							<hc:propertyExpression><![CDATA["xy"]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.enabled">
+							<hc:propertyExpression><![CDATA[Boolean.TRUE]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.href">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="legend.enabled">
+							<hc:propertyExpression><![CDATA[Boolean.FALSE]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="legend.lineHeight">
+							<hc:propertyExpression><![CDATA[new Integer(14)]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="legend.rtl">
+							<hc:propertyExpression><![CDATA[Boolean.TRUE]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="subtitle.floating">
+							<hc:propertyExpression><![CDATA[Boolean.TRUE]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="subtitle.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="title.floating">
+							<hc:propertyExpression><![CDATA[Boolean.FALSE]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="title.style.fontSize">
+							<hc:propertyExpression><![CDATA["12px"]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="title.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="xAxis.labels.style.fontSize" value="9"/>
+						<hc:chartProperty name="xAxis.title.style.fontSize" value="9"/>
+						<hc:chartProperty name="xAxis.title.text">
+							<hc:propertyExpression><![CDATA["Week"]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="yAxis.labels.style.fontSize" value="9"/>
+						<hc:chartProperty name="yAxis.min" value="0"/>
+						<hc:chartProperty name="yAxis.tickAmount" value="10"/>
+						<hc:chartProperty name="yAxis.title.style.fontSize" value="9"/>
+						<hc:chartProperty name="yAxis.title.text">
+							<hc:propertyExpression><![CDATA["Score"]]></hc:propertyExpression>
+						</hc:chartProperty>
+					</hc:chartSetting>
+					<multiAxisData>
+						<multiAxisDataset/>
+						<dataAxis axis="Rows">
+							<axisLevel name="Week">
+								<labelExpression><![CDATA["Level Label expression"]]></labelExpression>
+								<axisLevelBucket order="None" class="java.lang.String">
+									<bucketExpression><![CDATA[$F{week}]]></bucketExpression>
+								</axisLevelBucket>
+							</axisLevel>
+						</dataAxis>
+						<dataAxis axis="Columns"/>
+						<multiAxisMeasure name="Score" class="java.lang.Integer" calculation="Nothing">
+							<labelExpression><![CDATA["Score"]]></labelExpression>
+							<valueExpression><![CDATA[INTEGER_VALUE( $F{score} )]]></valueExpression>
+						</multiAxisMeasure>
+					</multiAxisData>
+					<hc:series name="Score"/>
+				</hc:chart>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

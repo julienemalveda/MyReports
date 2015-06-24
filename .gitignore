@@ -1,0 +1,4 @@
+*.jasper
+.classpath
+.project
+.settings

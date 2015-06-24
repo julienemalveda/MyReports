@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
+<!-- 2015-06-24T13:35:24 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DistrictSchoolReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="20" uuid="4d51606e-85db-420c-8d92-635e0d07c962">
+	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver-pro/"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
+	<property name="ireport.jasperserver.user" value="superuser"/>
+	<property name="ireport.jasperserver.report.resource" value="/public/DistrictSchoolReport_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/public/DistrictSchoolReport"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Gideon - DB"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="school" class="java.util.Collection" nestedType="java.lang.String" isForPrompting="false"/>
+	<parameter name="district" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="type" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="filter" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="startdate" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2015-01-31 00:00:00"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="enddate" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["2016-01-31 23:59:59"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="optionalschoolquery" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean($P{school} == null || $P{school}.equals("")) ? "" :" and $X{IN, schoolname, school}"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="optionaldistrictquery" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[new Boolean($P{district} == null || $P{district}.equals("")) ? "" : " and lrbt.districtname = '"+$P{district}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tagskey" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="optionaltagskeyquery" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean($P{tagskey} == null || $P{tagskey}.equals("")) ? "" : " and otf.tagskey  = '"+$P{tagskey}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tagsvalue" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="optionaltagsvaluequery" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean($P{tagsvalue} == null || $P{tagsvalue}.equals("")) ? "" : " and otf.tagsvalue  = '"+$P{tagsvalue}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="templateid" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1cd34551-dd7e-4200-984d-4a730cc03f31"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="optionaltypequery" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean($P{type} == null || $P{type}.equals("")) ? "" : " and lrbt.observationtype = '"+$P{type}+"' "]]></defaultValueExpression>
+	</parameter>
+	<parameter name="observationids" class="java.util.Collection" nestedType="java.lang.String" isForPrompting="false"/>
+	<parameter name="observationidsquery" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[new Boolean($P{observationids} == null || $P{observationids}.equals("")) ? "" :" and $X{IN, l.observationid, observationids}"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="groupscore" class="java.lang.Object" isForPrompting="false">
+		<defaultValueExpression><![CDATA["SecondGroupwithnoAttachmentsandallindicatortypes:40%|FirstGroupWithAttachmentsandoneOEquestion:60%|"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[select
+	t.templateid,
+	t.templatename,
+	t.groupid,
+	t.groupname,
+	(
+		select 
+			count(l.*)
+		from
+			"locationresultsbytemplate" l
+		where
+			l.templateid = t.templateid::TEXT
+		$P!{observationidsquery} 	
+	) as numberofobservations,
+	
+	substr(
+		substr(
+			substr( trim($P{groupscore}), strpos(trim($P{groupscore}), trim(t.groupname)), strpos(trim($P{groupscore}), '|') ),
+			
+			strpos( substr( trim($P{groupscore}), strpos(trim($P{groupscore}), trim(t.groupname)), strpos( trim($P{groupscore}), '|') )  ,  ':') + 1,
+			
+			strpos( substr( trim($P{groupscore}), strpos(trim($P{groupscore}), trim(t.groupname)), strpos( trim($P{groupscore}), '|') )  ,  '|' )
+		),
+		
+		0,
+		
+		length( substr(
+			substr( trim($P{groupscore}), strpos(trim($P{groupscore}), trim(t.groupname)), strpos( trim($P{groupscore})  , '|') ),
+			
+			strpos( substr( trim($P{groupscore}), strpos(trim($P{groupscore}), trim(t.groupname)), strpos( trim($P{groupscore}), '|') )  ,  ':') + 1,
+			
+			strpos( substr( trim($P{groupscore}), strpos(trim($P{groupscore}), trim(t.groupname)), strpos( trim($P{groupscore})  , '|') )  ,  '|' )
+		) )
+	) as groupscore
+from
+	"templategroups" t
+where
+	t.templateid::TEXT = $P{templateid}]]>
+	</queryString>
+	<field name="groupid" class="java.lang.String"/>
+	<field name="groupname" class="java.lang.String"/>
+	<field name="templateid" class="java.lang.Object"/>
+	<field name="templatename" class="java.lang.String"/>
+	<field name="numberofobservations" class="java.lang.Long"/>
+	<field name="groupscore" class="java.lang.String"/>
+	<title>
+		<band height="382">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="123" width="555" height="25" backcolor="#1A9BFC" uuid="0069ec10-5e9d-4373-88f7-e90752c6be8c"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#1A9BFC"/>
+					<leftPen lineWidth="1.0" lineColor="#1A9BFC"/>
+					<bottomPen lineWidth="1.0" lineColor="#1A9BFC"/>
+					<rightPen lineWidth="1.0" lineColor="#1A9BFC"/>
+				</box>
+				<textField>
+					<reportElement x="5" y="3" width="465" height="20" forecolor="#FFFFFF" uuid="c30a33fb-c3aa-4405-883c-2e731fdc91cb">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{templatename}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="470" y="5" width="80" height="15" forecolor="#FFFFFF" uuid="48f99d0a-917c-4346-b581-39f5de334a28">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="9" isBold="false" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{numberofobservations}) + " Observations"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="148" width="555" height="75" backcolor="#F5FBFE" uuid="00e625bf-b8fc-45e1-9a0f-5b6913fbfc5a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#1A9BFC"/>
+					<leftPen lineWidth="0.5" lineColor="#1A9BFC"/>
+					<bottomPen lineWidth="0.5" lineColor="#1A9BFC"/>
+					<rightPen lineWidth="0.5" lineColor="#1A9BFC"/>
+				</box>
+				<staticText>
+					<reportElement x="5" y="5" width="50" height="15" forecolor="#0D4D7E" uuid="761d01ce-f3ec-49c9-ab29-1990e3bb89d7">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Type]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="60" y="5" width="210" height="15" uuid="d93697db-718e-42e3-bee4-5425befe21ba">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{type} == null || $P{type}.equals("")) ? "Formal" : $P{type}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="280" y="5" width="50" height="15" forecolor="#0D4D7E" uuid="1ab96725-1acd-45ff-bf32-87510d935059">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Filter(s)]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="335" y="5" width="210" height="15" uuid="03f1fe6d-5c7d-44b7-8c18-defed1025a8c">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{tagskey} == null || $P{tagskey}.equals("")) ? "Science, 3rd Grade, 4th Grade" : $P{tagskey}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="25" width="555" height="1" uuid="7f8993c6-a162-48f1-836f-cb9922c86094">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#1A9BFC"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="50" width="555" height="1" uuid="e606e821-503d-4c9c-bb0d-3b694aa847e3">
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<graphicElement>
+						<pen lineWidth="0.5" lineColor="#1A9BFC"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="5" y="30" width="50" height="15" forecolor="#0D4D7E" uuid="d6d2e04c-0d07-4a0b-b279-8aed6a535759">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Date Range]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="60" y="30" width="210" height="15" uuid="59806f68-a9bb-4582-bb23-29ecd2b64041">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( new SimpleDateFormat("MMMM dd, yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($P{startdate})) ) + " - " + (new SimpleDateFormat("MMMM dd, yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse($P{enddate})))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="280" y="30" width="50" height="15" forecolor="#0D4D7E" uuid="7cd9d735-06ca-44d6-bf57-c505992f1e8f">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Report Run]]></text>
+				</staticText>
+				<textField pattern="MMMMM dd, yyyy">
+					<reportElement x="335" y="30" width="210" height="15" uuid="883ae547-66f0-4420-a31f-40bb27f8a1fe">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="5" y="55" width="50" height="15" forecolor="#0D4D7E" uuid="1dd4deb4-ddd6-4c02-a009-8937ad54458b">
+						<property name="local_mesure_unitwidth" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="local_mesure_unitheight" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="local_mesure_unity" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[School]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="60" y="55" width="210" height="15" uuid="9ef3e3f4-d7e3-41e4-a888-0f4a657453bb">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{school} == null) ? "Sunnyvale Elementary School" : $P{school}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="280" y="55" width="50" height="15" forecolor="#0D4D7E" uuid="48b671ff-652c-497a-9f8d-ed163451cc13">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="local_mesure_unitx" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[District]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="335" y="55" width="210" height="15" uuid="e6f608f1-a60f-46d6-91d3-409f661e9349">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Avenir Next - Custom" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($P{district} == null || $P{district}.equals("")) ? "Aspen Ridge ISD" : $P{district}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line direction="BottomUp">
+				<reportElement x="-1" y="106" width="556" height="1" uuid="681cd44b-3e93-4ca1-96b4-ff8190321766"/>
+				<graphicElement>
+					<pen lineColor="#F0F0F1"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="80" width="300" height="30" uuid="3f989a46-eff6-43e3-937f-d28b4d33e29a"/>
+				<textElement>
+					<font fontName="Avenir Next - Custom" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Results by Template Report]]></text>
+			</staticText>
+			<image>
+				<reportElement x="-20" y="0" width="595" height="80" uuid="8b8be977-de66-42aa-9dcc-9dbebe8af668">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["http://s4.postimg.org/7449kbvn1/header.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement mode="Opaque" x="0" y="240" width="554" height="22" forecolor="#FFFFFF" backcolor="#1A9BFC" uuid="7b7cb3fa-3c7b-4a29-b846-a2a1907a5b86">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#1A9BFC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#1A9BFC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Avenir Next - Custom" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Weekly Summary of Observations"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="10" y="277" width="535" height="68" uuid="a8bb6af3-42e4-4c82-801a-345f54541267"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Summary.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="370" width="554" height="1" uuid="bbda9015-1bc2-4f3a-9524-68b1d97c1c50"/>
+			</break>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="61">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="28" width="554" height="22" forecolor="#FFFFFF" backcolor="#1A9BFC" uuid="bfa401ab-ba59-43f4-a88e-078b6da1620d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[new Boolean($V{PAGE_NUMBER} == 2)]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#1A9BFC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#1A9BFC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Avenir Next - Custom" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Detailed Summary of Observations"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="34">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="554" height="22" forecolor="#333333" backcolor="#F4F8F9" uuid="be890d24-b88a-4874-8eb9-fe445c12a177">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Avenir Next - Custom" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{groupname} + " - 70.0%"]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement mode="Transparent" x="1" y="24" width="553" height="10" backcolor="#C75756" uuid="3a398790-e2d1-41a5-9008-3a81d354627c"/>
+				<subreportParameter name="templateid">
+					<subreportParameterExpression><![CDATA[$P{templateid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="groupid">
+					<subreportParameterExpression><![CDATA[$F{groupid}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="observationids">
+					<subreportParameterExpression><![CDATA[$P{observationids}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["Indicators.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
