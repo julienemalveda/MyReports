@@ -416,4 +416,42 @@ where
 			</subreport>
 		</band>
 	</detail>
+	<pageFooter>
+		<band height="130">
+			<textField evaluationTime="Page">
+				<reportElement x="492" y="103" width="30" height="19" uuid="c271213d-59c5-45e3-acb2-9affbfb3302c">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="Avenir Normal"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER} + " / "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="525" y="103" width="30" height="19" uuid="cae905dd-8425-445d-b5c2-abada1ef2493"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Avenir Normal"/>
+				</textElement>
+				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Bottom">
+				<reportElement x="1" y="97" width="200" height="30" uuid="4f38eab6-2d57-4aff-87b0-11e614e18fe7">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["http://s10.postimg.org/5f4r505k9/Edivate_Observe_white.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="89" width="555" height="1" backcolor="#5BC32F" uuid="253bbca9-8c19-4a8d-ba19-5856465868ca"/>
+				<graphicElement>
+					<pen lineColor="#5BC32F"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageFooter>	
 </jasperReport>
