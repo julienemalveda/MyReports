@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-06-24T13:30:57 -->
+<!-- 2015-06-25T11:23:32 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Indicators" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="10" bottomMargin="10" uuid="1a176322-c4b1-4540-a957-9b23815d6588">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Gideon - DB"/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver-pro/"/>
 	<property name="ireport.jasperserver.user" value="superuser"/>
 	<property name="ireport.jasperserver.report.resource" value="/public/DistrictSchoolReport_files/Indicators.jrxml"/>
@@ -16,6 +15,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="groupid" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="templateid" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="type" class="java.lang.String" isForPrompting="false"/>
@@ -52,9 +52,9 @@ and
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="26">
+		<band height="10">
 			<textField isStretchWithOverflow="true">
-				<reportElement isPrintRepeatedValues="false" x="0" y="5" width="530" height="20" uuid="82bf1f24-7f48-4e98-b10f-1871c29b263b">
+				<reportElement isPrintRepeatedValues="false" x="0" y="-10" width="530" height="20" uuid="82bf1f24-7f48-4e98-b10f-1871c29b263b">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -67,7 +67,7 @@ and
 				<textFieldExpression><![CDATA[$F{indicatorquestion}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement mode="Transparent" x="0" y="11" width="520" height="10" isPrintWhenDetailOverflows="true" backcolor="#FFFFFF" uuid="4dde10f0-0364-4674-803f-08a1922cfbcf">
+				<reportElement mode="Transparent" x="0" y="-4" width="520" height="10" isPrintWhenDetailOverflows="true" backcolor="#FFFFFF" uuid="4dde10f0-0364-4674-803f-08a1922cfbcf">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<printWhenExpression><![CDATA[new Boolean($F{indicatortype}.equals("1"))]]></printWhenExpression>
 				</reportElement>
@@ -87,7 +87,7 @@ and
 				<subreportExpression><![CDATA["Stats.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement mode="Transparent" x="0" y="11" width="520" height="10" isPrintWhenDetailOverflows="true" backcolor="#FFFFFF" uuid="6fdeed9c-ac57-4f70-9a41-012555512139">
+				<reportElement mode="Transparent" x="0" y="-4" width="520" height="10" isPrintWhenDetailOverflows="true" backcolor="#FFFFFF" uuid="6fdeed9c-ac57-4f70-9a41-012555512139">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<printWhenExpression><![CDATA[new Boolean($F{indicatortype}.equals("4"))]]></printWhenExpression>
 				</reportElement>
@@ -107,7 +107,7 @@ and
 				<subreportExpression><![CDATA["Rubric.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="0" y="11" width="520" height="10" backcolor="#FFFFFF" uuid="c813181f-13d4-4a22-a151-63cb1d4f4e75">
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="0" y="-4" width="520" height="10" backcolor="#FFFFFF" uuid="c813181f-13d4-4a22-a151-63cb1d4f4e75">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<printWhenExpression><![CDATA[new Boolean($F{indicatortype}.equals("2") || $F{indicatortype}.equals("3"))]]></printWhenExpression>
@@ -130,22 +130,6 @@ and
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["MultipleChoice.jasper"]]></subreportExpression>
 			</subreport>
-			<textField isStretchWithOverflow="true">
-				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="-15" y="0" width="544" height="22" backcolor="#FFF4D8" uuid="920da48b-3296-47a8-a766-a0191dd20a27">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<printWhenExpression><![CDATA[new Boolean( INTEGER_VALUE( $F{indicatortype} ) ==5 )]]></printWhenExpression>
-				</reportElement>
-				<box topPadding="5" leftPadding="10" bottomPadding="5" rightPadding="10"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Avenir Next - Custom" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{indicatorquestion}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 </jasperReport>
