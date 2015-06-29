@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-06-18T15:36:14 -->
+<!-- 2015-06-29T13:27:32 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rubric" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c570d31-b520-4874-90f6-48cd182a7ab7">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Localhost"/>
 	<parameter name="templateid" class="java.lang.String"/>
@@ -67,7 +67,7 @@ and
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
@@ -83,7 +83,7 @@ and
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
@@ -98,7 +98,7 @@ and
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
@@ -111,7 +111,7 @@ and
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
