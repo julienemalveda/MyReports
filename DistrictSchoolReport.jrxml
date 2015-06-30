@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-06-29T15:17:57 -->
+<!-- 2015-06-30T15:21:59 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DistrictSchoolReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="20" uuid="4d51606e-85db-420c-8d92-635e0d07c962">
 	<property name="ireport.jasperserver.url" value="http://localhost:8080/jasperserver-pro/"/>
 	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
@@ -16,7 +16,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Jasper DB"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Jasper - DB"/>
 	<parameter name="school" class="java.util.Collection" nestedType="java.lang.String" isForPrompting="false"/>
 	<parameter name="district" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="type" class="java.lang.String" isForPrompting="false"/>
@@ -362,9 +362,6 @@ where
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["Summary.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement x="0" y="370" width="554" height="1" uuid="bbda9015-1bc2-4f3a-9524-68b1d97c1c50"/>
-			</break>
 		</band>
 	</title>
 	<pageHeader>
@@ -442,7 +439,7 @@ where
 				<textFieldExpression><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Bottom">
-				<reportElement x="1" y="97" width="200" height="30" uuid="4f38eab6-2d57-4aff-87b0-11e614e18fe7">
+				<reportElement x="1" y="97" width="180" height="30" uuid="4f38eab6-2d57-4aff-87b0-11e614e18fe7">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -451,9 +448,9 @@ where
 				<imageExpression><![CDATA["http://s10.postimg.org/5f4r505k9/Edivate_Observe_white.png"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="0" y="89" width="555" height="1" backcolor="#5BC32F" uuid="253bbca9-8c19-4a8d-ba19-5856465868ca"/>
+				<reportElement x="0" y="99" width="555" height="1" backcolor="#5BC32F" uuid="253bbca9-8c19-4a8d-ba19-5856465868ca"/>
 				<graphicElement>
-					<pen lineColor="#5BC32F"/>
+					<pen lineWidth="0.5" lineColor="#5BC32F"/>
 				</graphicElement>
 			</line>
 		</band>

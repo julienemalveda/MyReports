@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-06-29T13:27:32 -->
+<!-- 2015-06-30T15:21:41 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Rubric" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7c570d31-b520-4874-90f6-48cd182a7ab7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Localhost"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Jasper - DB"/>
 	<parameter name="templateid" class="java.lang.String"/>
 	<parameter name="indicatorid" class="java.lang.String"/>
 	<parameter name="observationids" class="java.util.Collection" nestedType="java.lang.String" isForPrompting="false"/>
@@ -10,7 +10,8 @@
 		<defaultValueExpression><![CDATA[new Boolean($P{observationids} == null || $P{observationids}.equals("")) ? "" :" and $X{IN, observationid::TEXT, observationids}"]]></defaultValueExpression>
 	</parameter>
 	<queryString language="SQL">
-		<![CDATA[select 
+		<![CDATA[select
+chr(ROW_NUMBER() OVER (ORDER BY groupname)::INT+64) AS index_val,
 	t.templateid,
 	t.templatename,
 	t.groupid,
@@ -56,6 +57,7 @@ and
 	<field name="templatename" class="java.lang.String"/>
 	<field name="indicatortype" class="java.lang.String"/>
 	<field name="optiontype" class="java.lang.String"/>
+	<field name="index_val" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -123,51 +125,64 @@ and
 	</detail>
 	<summary>
 		<band height="186">
-			<barChart>
-				<chart evaluationTime="Report">
-					<reportElement x="0" y="10" width="480" height="170" uuid="0be22078-fff6-404d-81b6-0a00cdddfd71">
-						<property name="net.sf.jasperreports.chart.range.axis.tick.interval" value="1"/>
-					</reportElement>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend>
-						<font fontName="Avenir Next - Custom"/>
-					</chartLegend>
-				</chart>
-				<categoryDataset>
-					<categorySeries>
-						<seriesExpression><![CDATA[$F{optiontext}]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{optiontext}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{count}]]></valueExpression>
-						<labelExpression><![CDATA[$F{indicatorquestion}]]></labelExpression>
-					</categorySeries>
-				</categoryDataset>
-				<barPlot isShowLabels="false" isShowTickLabels="false">
-					<plot orientation="Horizontal">
-						<seriesColor seriesOrder="0" color="#6ACA3F"/>
-						<seriesColor seriesOrder="1" color="#1A9BFC"/>
-						<seriesColor seriesOrder="2" color="#FD9833"/>
-						<seriesColor seriesOrder="3" color="#FEC53D"/>
-						<seriesColor seriesOrder="4" color="#AB3584"/>
-					</plot>
-					<itemLabel/>
-					<categoryAxisFormat>
-						<axisFormat/>
-					</categoryAxisFormat>
-					<valueAxisFormat>
-						<axisFormat tickLabelMask="#"/>
-					</valueAxisFormat>
-				</barPlot>
-			</barChart>
-			<line>
-				<reportElement x="0" y="184" width="480" height="1" uuid="d0e6f139-2fdb-4e20-ad51-c32dcdadedf6">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<componentElement>
+				<reportElement x="0" y="10" width="480" height="170" uuid="370049f2-3445-4743-9791-4f79d497ae3e">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#F0F0F1"/>
-				</graphicElement>
-			</line>
+				<hc:chart xmlns:hc="http://jaspersoft.com/highcharts" xsi:schemaLocation="http://jaspersoft.com/highcharts http://jaspersoft.com/schema/highcharts.xsd" type="Column">
+					<hc:chartSetting name="default">
+						<hc:chartProperty name="chart.zoomType">
+							<hc:propertyExpression><![CDATA["xy"]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="colors">
+							<hc:propertyExpression><![CDATA[java.util.Arrays.asList("#6aca3f", "#1a9bfc","#fd9833", "#fec53d", "#ab3584", "#cdfd9e", "#a8dcfd", "#fec587", "#fee39d", "#e29fcb")]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.enabled">
+							<hc:propertyExpression><![CDATA[false]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.href">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="plotOptions.column.colorByPoint" value="true"/>
+						<hc:chartProperty name="plotOptions.series.showInLegend">
+							<hc:propertyExpression><![CDATA[Boolean.FALSE]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="title.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="yAxis.Min" value="0"/>
+						<hc:chartProperty name="yAxis.allowDecimals" value="Boolean.FALSE"/>
+						<hc:chartProperty name="yAxis.tickPixelInterval" value="60"/>
+						<hc:chartProperty name="yAxis.title.style.fontSize" value="9"/>
+						<hc:chartProperty name="yAxis.title.text">
+							<hc:propertyExpression><![CDATA["# of observations"]]></hc:propertyExpression>
+						</hc:chartProperty>
+					</hc:chartSetting>
+					<multiAxisData>
+						<multiAxisDataset/>
+						<dataAxis axis="Rows">
+							<axisLevel name="Labels">
+								<labelExpression><![CDATA["Level Label expression"]]></labelExpression>
+								<axisLevelBucket order="None" class="java.lang.String">
+									<bucketExpression><![CDATA[$F{index_val}]]></bucketExpression>
+								</axisLevelBucket>
+							</axisLevel>
+						</dataAxis>
+						<dataAxis axis="Columns"/>
+						<multiAxisMeasure name="Observations" class="java.lang.Integer" calculation="Nothing">
+							<labelExpression><![CDATA["# of observations"]]></labelExpression>
+							<valueExpression><![CDATA[$F{count}]]></valueExpression>
+						</multiAxisMeasure>
+					</multiAxisData>
+					<hc:series name="Observations"/>
+				</hc:chart>
+			</componentElement>
 		</band>
 	</summary>
 </jasperReport>
