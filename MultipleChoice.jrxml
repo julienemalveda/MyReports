@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-06-18T15:43:32 -->
+<!-- 2015-07-01T12:03:32 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MultipleChoice" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ea7d90b-d9e1-4a5b-b0ae-9e81e0d0e1b9">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Gideon - DB"/>
 	<property name="ireport.jasperserver.url" value="http://jasper1.staging.pd360.com:8080/jasperserver-pro/"/>
 	<property name="ireport.jasperserver.user" value="jasperadmin|EdivateObservation"/>
 	<property name="ireport.jasperserver.report.resource" value="/District_Role_Reports/DistrictSchoolReport_files/MultipleChoice.jrxml"/>
 	<property name="ireport.jasperserver.reportUnit" value="/District_Role_Reports/DistrictSchoolReport"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Jasper - DB"/>
 	<parameter name="indicatorid" class="java.lang.String"/>
 	<parameter name="templateid" class="java.lang.String"/>
 	<parameter name="indicatortype" class="java.lang.String"/>
@@ -16,6 +16,7 @@
 	</parameter>
 	<queryString language="SQL">
 		<![CDATA[select 
+chr(ROW_NUMBER() OVER (ORDER BY groupname)::INT+64) AS index_val,
 	t.templateid,
 	t.templatename,
 	t.groupid,
@@ -66,6 +67,7 @@ and
 	<field name="templatename" class="java.lang.String"/>
 	<field name="optiontype" class="java.lang.String"/>
 	<field name="suboptionsjson" class="java.lang.Object"/>
+	<field name="index_val" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -98,7 +100,7 @@ and
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
@@ -113,7 +115,7 @@ and
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
@@ -127,7 +129,7 @@ and
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==0 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
@@ -140,7 +142,7 @@ and
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
-					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 ) ]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean( $V{COLUMN_COUNT}.intValue() % 2 ==1 )]]></printWhenExpression>
 				</reportElement>
 				<box leftPadding="10" rightPadding="10"/>
 				<textElement verticalAlignment="Middle">
@@ -151,52 +153,65 @@ and
 		</band>
 	</detail>
 	<summary>
-		<band height="187">
-			<barChart>
-				<chart evaluationTime="Report">
-					<reportElement x="0" y="10" width="481" height="170" uuid="c964b27f-c9c4-4510-bc90-6615d202e08d">
-						<property name="net.sf.jasperreports.chart.range.axis.tick.interval" value="1"/>
-					</reportElement>
-					<chartTitle/>
-					<chartSubtitle/>
-					<chartLegend>
-						<font fontName="Avenir Next - Custom"/>
-					</chartLegend>
-				</chart>
-				<categoryDataset>
-					<categorySeries>
-						<seriesExpression><![CDATA[$F{optiontext}]]></seriesExpression>
-						<categoryExpression><![CDATA[$F{optiontext}]]></categoryExpression>
-						<valueExpression><![CDATA[$F{count}]]></valueExpression>
-						<labelExpression><![CDATA[$F{indicatorquestion}]]></labelExpression>
-					</categorySeries>
-				</categoryDataset>
-				<barPlot isShowLabels="false" isShowTickLabels="false">
-					<plot>
-						<seriesColor seriesOrder="0" color="#6ACA3F"/>
-						<seriesColor seriesOrder="1" color="#1A9BFC"/>
-						<seriesColor seriesOrder="2" color="#FD9833"/>
-						<seriesColor seriesOrder="3" color="#FEC53D"/>
-						<seriesColor seriesOrder="4" color="#AB3584"/>
-					</plot>
-					<itemLabel/>
-					<categoryAxisFormat>
-						<axisFormat/>
-					</categoryAxisFormat>
-					<valueAxisFormat>
-						<axisFormat tickLabelMask="#"/>
-					</valueAxisFormat>
-				</barPlot>
-			</barChart>
-			<line>
-				<reportElement x="0" y="184" width="480" height="1" uuid="4c2aa66e-d5bf-4ad8-95c5-90dd9d987047">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		<band height="181">
+			<componentElement>
+				<reportElement x="0" y="10" width="480" height="170" uuid="c996344e-d70b-4a7b-890c-a8e7925f8a39">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#F0F0F1"/>
-				</graphicElement>
-			</line>
+				<hc:chart xmlns:hc="http://jaspersoft.com/highcharts" xsi:schemaLocation="http://jaspersoft.com/highcharts http://jaspersoft.com/schema/highcharts.xsd" type="Column">
+					<hc:chartSetting name="default">
+						<hc:chartProperty name="chart.zoomType">
+							<hc:propertyExpression><![CDATA["xy"]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="colors">
+							<hc:propertyExpression><![CDATA[java.util.Arrays.asList("#6aca3f", "#1a9bfc","#fd9833", "#fec53d", "#ab3584", "#cdfd9e", "#a8dcfd", "#fec587", "#fee39d", "#e29fcb")]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.enabled">
+							<hc:propertyExpression><![CDATA[false]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.href">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="credits.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="legend.enabled">
+							<hc:propertyExpression><![CDATA[Boolean.FALSE]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="plotOptions.column.colorByPoint" value="true"/>
+						<hc:chartProperty name="title.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+						<hc:chartProperty name="yAxis.allowDecimals" value="Boolean.FALSE"/>
+						<hc:chartProperty name="yAxis.gridLineDashStyle" value="longdash"/>
+						<hc:chartProperty name="yAxis.gridLineWidth" value="0.50"/>
+						<hc:chartProperty name="yAxis.tickPixelInterval" value="80"/>
+						<hc:chartProperty name="yAxis.title.text">
+							<hc:propertyExpression><![CDATA[""]]></hc:propertyExpression>
+						</hc:chartProperty>
+					</hc:chartSetting>
+					<multiAxisData>
+						<multiAxisDataset/>
+						<dataAxis axis="Rows">
+							<axisLevel name="Index Val">
+								<labelExpression><![CDATA["Level Label expression"]]></labelExpression>
+								<axisLevelBucket order="None" class="java.lang.String">
+									<bucketExpression><![CDATA[$F{index_val}]]></bucketExpression>
+								</axisLevelBucket>
+							</axisLevel>
+						</dataAxis>
+						<dataAxis axis="Columns"/>
+						<multiAxisMeasure name="Measure1" class="java.lang.Integer" calculation="Nothing">
+							<labelExpression><![CDATA["test"]]></labelExpression>
+							<valueExpression><![CDATA[$F{count}]]></valueExpression>
+						</multiAxisMeasure>
+					</multiAxisData>
+					<hc:series name="Measure1"/>
+				</hc:chart>
+			</componentElement>
 		</band>
 	</summary>
 </jasperReport>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.0.0.final using JasperReports Library version 6.0.0  -->
-<!-- 2015-06-26T14:56:47 -->
+<!-- 2015-07-01T08:56:50 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Summary" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="6fdc09b9-ea06-4e8b-89a3-8973379001be">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Jasper - DB"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -234,9 +234,12 @@
 						<hc:chartProperty name="xAxis.title.text">
 							<hc:propertyExpression><![CDATA["Week"]]></hc:propertyExpression>
 						</hc:chartProperty>
+						<hc:chartProperty name="yAxis.gridLineDashStyle" value="longdash"/>
+						<hc:chartProperty name="yAxis.gridLineWidth" value="0.50"/>
 						<hc:chartProperty name="yAxis.labels.style.fontSize" value="9"/>
 						<hc:chartProperty name="yAxis.min" value="0"/>
 						<hc:chartProperty name="yAxis.tickAmount" value="10"/>
+						<hc:chartProperty name="yAxis.tickPixelInterval" value="10"/>
 						<hc:chartProperty name="yAxis.title.style.fontSize" value="9"/>
 						<hc:chartProperty name="yAxis.title.text">
 							<hc:propertyExpression><![CDATA["Score"]]></hc:propertyExpression>
